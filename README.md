@@ -5,6 +5,10 @@ package `provider`.
 
 ## What's it all about?
 
+This project has been developed and tested on Flutter-web for:
+- Windows-chrome
+- MacOs-chrome
+
 This project highlights an unusual behaviour (bug?) where animations involving
 the `ScaleEffect` behave differently when combined with:
 
