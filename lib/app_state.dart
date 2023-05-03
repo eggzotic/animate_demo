@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 class AppState with ChangeNotifier {
   /// Whether the animation is in progress
-  bool get animating => _animating;
-  bool _animating = false;
+  bool get isAnimating => _isAnimating;
+  bool _isAnimating = false;
 
   /// Whether the animation should start playing forward
   ///
@@ -28,15 +28,15 @@ class AppState with ChangeNotifier {
   /// (Re-)start the animation
   void begin() {
     _goForward = !_goForward;
-    _animating = true;
+    _isAnimating = true;
     notifyListeners();
   }
 
   /// Update the current state of animation-in-progress
-  void update(bool status) {
+  void animating(bool status) {
     // notify only if this has changed
-    final notify = status != _animating;
-    _animating = status;
+    final notify = status != _isAnimating;
+    _isAnimating = status;
     if (notify) notifyListeners();
   }
 }

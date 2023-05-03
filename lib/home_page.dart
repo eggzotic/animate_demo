@@ -27,8 +27,8 @@ class HomePage extends StatelessWidget {
         ListTile(
           title: IconButton(
             iconSize: 50,
-            onPressed: appState.animating ? null : () => appState.begin(),
-            icon: Icon(appState.animating ? Icons.block : Icons.play_arrow),
+            onPressed: appState.isAnimating ? null : () => appState.begin(),
+            icon: Icon(appState.isAnimating ? Icons.block : Icons.play_arrow),
           ),
           trailing: SizedBox(
             width: 100,
@@ -75,8 +75,8 @@ class MyTile extends StatelessWidget {
       title: Center(
         child: Animate(
           target: appState.goForward ? 1 : 0,
-          onPlay: (_) => appState.update(true),
-          onComplete: (_) => appState.update(false),
+          onPlay: (_) => appState.animating(true),
+          onComplete: (_) => appState.animating(false),
           effects: effects,
           child: Text(description),
         ),
