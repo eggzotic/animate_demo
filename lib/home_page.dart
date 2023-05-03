@@ -25,6 +25,10 @@ class HomePage extends StatelessWidget {
       ),
       body: ListView(children: [
         ListTile(
+          leading: const SizedBox(),
+          isThreeLine: true,
+          subtitle: const Text(
+              'Use the slider to see the affect of 0 and non-zero ScaleEffect begin value.\nNote how the ScaleEffect fails when: begin > 0 and it follows the FadeEffect'),
           title: IconButton(
             iconSize: 50,
             onPressed: appState.isAnimating ? null : () => appState.begin(),
@@ -46,12 +50,12 @@ class HomePage extends StatelessWidget {
         MyTile(
             effects: eff1,
             description:
-                'Effect 1: fade, scale (begin = ${appState.minScale})'),
+                'Effects 1: fade, scale (begin = ${appState.minScale})'),
         const Divider(),
         MyTile(
             effects: eff2,
             description:
-                'Effect 2: scale (begin = ${appState.minScale}), fade'),
+                'Effects 2: scale (begin = ${appState.minScale}), fade'),
         const Divider(),
       ]),
     );
