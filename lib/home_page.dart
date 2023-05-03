@@ -25,10 +25,9 @@ class HomePage extends StatelessWidget {
       ),
       body: ListView(children: [
         ListTile(
-          leading: Text('Updates: ${appState.clicks}'),
           title: IconButton(
             iconSize: 50,
-            onPressed: appState.animating ? null : () => appState.toggle(),
+            onPressed: appState.animating ? null : () => appState.begin(),
             icon: Icon(appState.animating ? Icons.block : Icons.play_arrow),
           ),
           trailing: SizedBox(
@@ -75,7 +74,7 @@ class MyTile extends StatelessWidget {
     return ListTile(
       title: Center(
         child: Animate(
-          target: appState.go ? 1 : 0,
+          target: appState.goForward ? 1 : 0,
           onPlay: (_) => appState.update(true),
           onComplete: (_) => appState.update(false),
           effects: effects,

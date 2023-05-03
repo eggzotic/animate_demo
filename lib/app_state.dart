@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
 class AppState with ChangeNotifier {
-  int _clicks = 0;
-  int get clicks => _clicks;
-  //
-  bool _animating = false;
+  /// Whether the animation is in progress
   bool get animating => _animating;
-  //
-  bool _go = true;
-  bool get go => _go;
+  bool _animating = false;
+
+  /// Whether the animation should start playing forward
+  ///
+  /// - false means play in reverse
+  bool get goForward => _goForward;
+  bool _goForward = true;
   //
   // To facilitate user-control of the minimum Scale value
   double _minScale = 0.1;
@@ -16,6 +17,7 @@ class AppState with ChangeNotifier {
   final minMinScale = 0.0;
   final maxMinScale = 0.1;
 
+  /// Facilitates user-control of the minimum Scale value
   void setMinScale(double scale) {
     if (scale >= minMinScale && scale <= maxMinScale) {
       _minScale = scale;
@@ -23,13 +25,14 @@ class AppState with ChangeNotifier {
     notifyListeners();
   }
 
-  void toggle() {
-    if (!_go) _clicks += 1;
-    _go = !_go;
+  /// (Re-)start the animation
+  void begin() {
+    _goForward = !_goForward;
     _animating = true;
     notifyListeners();
   }
 
+  /// Update the current state of animation-in-progress
   void update(bool status) {
     // notify only if this has changed
     final notify = status != _animating;
