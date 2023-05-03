@@ -5,13 +5,16 @@ package `provider`.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project highlights an unusual bug(?) where animations involving the
+ScaleEffect behave differently when combined with:
 
-A few resources to get you started if this is your first Flutter project:
+- a FadeEffect
+- and whether the ScaleEffect begin offset is zero or anything higher
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Use the slider to move that ScaleEffect begin value between 0 and 0.1, and then
+hit the Play button a couple of times to see whether both effects behave.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Note that when the ScaleEffect has begin == Offset.zero and it *follows* the
+FadeEffect, the combined effect is broken. Any non-zero value for begin is a
+workaround - as shown when you set the slider to the right (which uses a token,
+small non-zero value).

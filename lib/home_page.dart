@@ -10,32 +10,14 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final appState = Provider.of<AppState>(context);
     final duration = 1000.ms;
-    final rotate = RotateEffect(duration: duration);
     final scale = ScaleEffect(
       duration: duration,
-      begin: Offset.zero,
-      end: const Offset(2, 2),
+      begin: Offset(appState.minScale, appState.minScale),
+      end: const Offset(2.0, 2.0),
     );
     final fade = FadeEffect(duration: duration);
-    // these 3 effects-lists differ only in the position of "fade"
-    // it seems that, after the first "play" to target of 1,
-    // the updates to the target value no longer propagate past the "fade"
-    // which I assume is a bug?
-    final working1 = <Effect>[rotate, scale, fade];
-    final working2 = <Effect>[scale, fade, rotate];
-    final broken1 = <Effect>[fade, rotate, scale];
-    //
-    final broken2 = <Effect>[rotate, fade, scale];
-    final broken3 = <Effect>[fade, scale, rotate];
-    final working3 = <Effect>[scale, rotate, fade];
-    //
-    const working1Text = 'All working (rotate, scale, fade)';
-    const working2Text = 'All working (scale, fade, rotate)';
-    const broken1Text = 'Broken: (fade: yes, rotate: no, scale: no) - after 2nd update';
-    //
-    const broken2Text = 'Broken: (rotate: yes, fade: yes, scale: no) - after 2nd update';
-    const broken3Text = 'Broken: (fade: yes, scale: no, rotate: no) - after 2nd update';
-    const working3Text = 'All working (scale, rotate, fade)';
+    final eff1 = <Effect>[fade, scale];
+    final eff2 = <Effect>[scale, fade];
     //
     return Scaffold(
       appBar: AppBar(
@@ -49,19 +31,28 @@ class HomePage extends StatelessWidget {
             onPressed: appState.animating ? null : () => appState.toggle(),
             icon: Icon(appState.animating ? Icons.block : Icons.play_arrow),
           ),
+          trailing: SizedBox(
+            width: 100,
+            child: Slider.adaptive(
+              value: appState.minScale,
+              onChanged: (d) => appState.setMinScale(d),
+              min: appState.minMinScale,
+              max: appState.maxMinScale,
+              divisions: 1,
+              label: 'Min. scale: ${appState.minScale}',
+            ),
+          ),
         ),
         const Divider(),
-        MyTile(effects: working1, description: working1Text),
+        MyTile(
+            effects: eff1,
+            description:
+                'Effect 1: fade, scale (begin = ${appState.minScale})'),
         const Divider(),
-        MyTile(effects: working2, description: working2Text),
-        const Divider(),
-        MyTile(effects: broken1, description: broken1Text),
-        const Divider(),
-        MyTile(effects: broken2, description: broken2Text),
-        const Divider(),
-        MyTile(effects: broken3, description: broken3Text),
-        const Divider(),
-        MyTile(effects: working3, description: working3Text),
+        MyTile(
+            effects: eff2,
+            description:
+                'Effect 2: scale (begin = ${appState.minScale}), fade'),
         const Divider(),
       ]),
     );
@@ -84,9 +75,9 @@ class MyTile extends StatelessWidget {
     return ListTile(
       title: Center(
         child: Animate(
-          target: appState.start ? 1 : 0,
-          onPlay: (c) => appState.update(true),
-          onComplete: (c) => appState.update(false),
+          target: appState.go ? 1 : 0,
+          onPlay: (_) => appState.update(true),
+          onComplete: (_) => appState.update(false),
           effects: effects,
           child: Text(description),
         ),
