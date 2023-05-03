@@ -5,7 +5,7 @@ package `provider`.
 
 ## How to run
 
-```
+```BASH
 flutter pub get
 flutter run -d chrome
 ```
