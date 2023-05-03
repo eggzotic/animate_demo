@@ -3,6 +3,13 @@
 Demo the `flutter_animate` package and integration with state management
 package `provider`.
 
+## How to run
+
+```
+flutter pub get
+flutter run -d chrome
+```
+
 ## What's it all about?
 
 This project has been developed and tested on Flutter-web for:
